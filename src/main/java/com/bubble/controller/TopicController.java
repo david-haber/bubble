@@ -100,7 +100,8 @@ public class TopicController {
 	public @ResponseBody Comment switchSentiment(@RequestParam("comment") int id) {
 		Comment retComment = commentRepo.switchSentiment(id);
 		if (retComment != null) {
-			classifier.classifyTextAs(retComment.getText(), retComment.getSentiment());
+			classifier.classifyTextAs(retComment.getText(), 
+					retComment.getSentiment());
 		}
 		return retComment;
 	}
@@ -150,18 +151,18 @@ public class TopicController {
 						(String)session.getAttribute("uname"));
 		Map<String, Double> out = new HashMap<String, Double>();
 
-		ArgumentGame g = new ArgumentGame(fullCommentMap);
+		//ArgumentGame g = new ArgumentGame(fullCommentMap);
 
 		long currId = startComment;
 		while(currId != 0) {
-		g.setArguedComment(currId);
+			//g.setArguedComment(currId);
 			double outcome = g.play();
 			CommentTree tr = fullCommentMap.get(currId);
 			Comment c = tr.getComment();
-			//Double newRank = nRank(c);
-			out.put("a"+currId, outcome);
+			Double newRank = nRank(c);
+			out.put("a"+currId, newRank);
 			currId = c.getParentId();
-			commentRepo.updateRankInDB(startComment, outcome);
+			commentRepo.updateRankInDB(startComment, newRank);
 		}
 
 		fullCommentMap.clear();
