@@ -151,7 +151,7 @@ public class TopicController {
 						(String)session.getAttribute("uname"));
 		Map<String, Double> out = new HashMap<String, Double>();
 
-		//ArgumentGame g = new ArgumentGame(fullCommentMap);
+		ArgumentGame g = new ArgumentGame(fullCommentMap);
 
 		long currId = startComment;
 		while(currId != 0) {
@@ -159,10 +159,10 @@ public class TopicController {
 			double outcome = g.play();
 			CommentTree tr = fullCommentMap.get(currId);
 			Comment c = tr.getComment();
-			Double newRank = nRank(c);
-			out.put("a"+currId, newRank);
+			//Double newRank = nRank(c);
+			out.put("a"+currId, outcome);
 			currId = c.getParentId();
-			commentRepo.updateRankInDB(startComment, newRank);
+			commentRepo.updateRankInDB(startComment, outcome);
 		}
 
 		fullCommentMap.clear();
