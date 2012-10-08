@@ -153,7 +153,6 @@ public class TopicController {
 						(String)session.getAttribute("uname"));
 		Map<String, Double> out = new HashMap<String, Double>();
 
-	
 		//ArgumentGame g = new ArgumentGame(fullCommentMap);
 
 		long currId = startComment;
@@ -175,7 +174,7 @@ public class TopicController {
 			impact = impact/factor;
 			factor = factor + 0.3;			
 		} 
-
+		
 		fullCommentMap.clear();
 
 		return out;
