@@ -89,7 +89,7 @@ public class WelcomeController {
 				Comment newComment = new Comment(0, newTopicId, 
 						accountRepo.findAccountByUsername(commenter),
 						topicForm.getInitialComment(), 0, 0, new Date(),
-						photoUrl, true, sentiment, 7.0);
+						photoUrl, true, sentiment, 5.0);
 				success = commentRepo.createComment(newComment);
 				if (!success) {
 					topicRepo.deleteTopic(topicForm.getTitle());

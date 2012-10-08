@@ -116,7 +116,7 @@
 										.hide().append(newcommhtml).fadeIn();
 								$("#option-reply" + parentId).trigger("click");
 								updateParentReplies(parentId);
-								recalcRanks(parentId);
+								recalcRanks(parentId, agreeing);
 								pressSubscribe();
 								calculateRank();
 							});
@@ -171,20 +171,21 @@
 										: "Downvoted";
 								replyElement.appendChild(confirmVote);
 								
-								recalcRanks(id);
+								recalcRanks(id, positive);
 								pressSubscribe();
 								calculateRank();
 							});			
 		}
 		
-		function recalcRanks(id) {
+		function recalcRanks(id, positive) {
 						
 			var topicId = document.getElementById("topicId").value;
 			
 			$.getJSON(
 					"comment/calcRanks",  
 					{ comment : id, 
-					  topic : topicId
+					  topic : topicId,
+					  update : positive
 					},
 					function(map) {
 						$.each(map, function(i, val){

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -77,7 +79,7 @@ public class TopicController {
 		Account commenterAccount = accountRepo.findAccountByUsername(commenter);
 		Comment newReply = new Comment(-1, topicId, commenterAccount, 
 				text, parentLevel+1, parentId, new Date(), 
-				photoUrl, agreeing, sentiment, 7.0);
+				photoUrl, agreeing, sentiment, 5.0);
 		commentRepo.createComment(newReply);
 		if (tweetMe && twitter.isAuthorized()) {
 			Topic t = topicRepo.getTopic(topicId);
@@ -144,30 +146,59 @@ public class TopicController {
 	@RequestMapping(value = "/comment/calcRanks", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Double> calcRanks(
 			@RequestParam("comment") int startComment,
-			@RequestParam("topic") int topicID, HttpSession session) {
+			@RequestParam("topic") int topicID, @RequestParam("update") boolean positive, HttpSession session) {
 
 		Map<Long, CommentTree> fullCommentMap = 
 				commentRepo.getCommentsAsMap(topicID, 
 						(String)session.getAttribute("uname"));
 		Map<String, Double> out = new HashMap<String, Double>();
 
-		ArgumentGame g = new ArgumentGame(fullCommentMap);
+		//ArgumentGame g = new ArgumentGame(fullCommentMap);
 
 		long currId = startComment;
-		while(currId != 0) {
+		boolean increase = positive;
+		double impact = 1;
+		double factor = 1.2;
+		while(currId != 0)
+		{
 			//g.setArguedComment(currId);
-			double outcome = g.play();
+			//double outcome = g.play();
 			CommentTree tr = fullCommentMap.get(currId);
 			Comment c = tr.getComment();
-			//Double newRank = nRank(c);
-			out.put("a"+currId, outcome);
+			double newRank = nRank(c, increase, impact);			
+			out.put("a"+currId, newRank);
+			commentRepo.updateRankInDB((int) currId, newRank);
+			
 			currId = c.getParentId();
-			commentRepo.updateRankInDB(startComment, outcome);
-		}
-
+			if (!c.isAgreeing()) increase = !increase;			
+			impact = impact/factor;
+			factor = factor + 0.3;			
+		} 
+		
 		fullCommentMap.clear();
 
 		return out;
+	}
+	
+	 double trunc(double a) {
+	    	long y=	Math.round(a*10);
+	        return (double) y/10;
+	    }
+	 
+	private double nRank(Comment comment, boolean increase, double impact)
+	{
+		double res = comment.getRank();
+		double diff = 0.5 * impact;
+		
+		if (increase)
+			res = res + diff ;
+		else
+			res = res - diff;
+		
+		if (res > 10) res = 10;
+		else if (res < 0) res = 0;
+		
+		return trunc(res);
 	}
 
 	@RequestMapping(value = "/topic/getSuggestions", method = RequestMethod.GET)

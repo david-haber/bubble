@@ -155,18 +155,18 @@ public class JdbcCommentRepository implements CommentRepository {
 
 
 	public Map<Long, CommentTree> getCommentsAsMap(int topicID, final String username) {			
-
+		
 		List<Comment> comments = getCommentsAsList(topicID, username);
-
 		Map<Long, CommentTree> treeMaker = new HashMap<Long, CommentTree>();				
 
 		Iterator<Comment> itr = comments.iterator();
 		while(itr.hasNext()) {
 			Comment comment = itr.next();
-			CommentTree commentNode = new CommentTree(comment);
-			treeMaker.put(new Long(comment.getId()), commentNode);
-
-			if(comment.getLevel() != 0) { 
+			CommentTree commentNode = new CommentTree(comment);			
+			treeMaker.put(new Long(comment.getId()), commentNode);			
+			int level = comment.getLevel();
+			
+			if(level != 0) { 
 				CommentTree parent = treeMaker.get(new Long(comment.getParentId()));
 				parent.addReply(commentNode);
 			}			
@@ -245,7 +245,6 @@ public class JdbcCommentRepository implements CommentRepository {
 		}
 		int rank = jdbcTemplate.queryForInt(
 				"SELECT sum(rank) FROM comment WHERE commenter = ?;", username);
-		System.out.println(rank);
 		return rank/comments;
 	}
 }
