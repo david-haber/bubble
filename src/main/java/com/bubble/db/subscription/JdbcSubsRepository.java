@@ -22,7 +22,8 @@ public class JdbcSubsRepository implements SubsRepository {
 	}
 
 	public void createSubscription(int topic, String user, boolean subscribed){
-		jdbcTemplate.update("update subscriptions set subscribed=? and datecreated=now() " +
+		System.out.println("top"+topic + " " + "user" + user + " " + "subscr" + subscribed);
+		jdbcTemplate.update("update subscriptions set subscribed=?, datecreated=now() " +
 				"where userid=? and topic=?;", 
 				subscribed, user, topic);
 		try {
