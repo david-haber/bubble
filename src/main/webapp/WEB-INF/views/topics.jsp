@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <script>
@@ -85,8 +86,12 @@ function visitTopic(bubble) {
 //Each element is [id,name]
 var topicsList = new Array();
 <c:forEach items="${topics}" var="topic" varStatus="loopCount">
+<c:set var="topicTitle" value="${topic.title}"/>
+<c:if test="${fn:length(topicTitle) > 12}">
+<c:set var="topicTitle" value="${fn:substring(topicTitle, 0, 10)}.."/>
+</c:if>
 topicsList[${loopCount.count-1}] = new Array();
-topicsList[${loopCount.count-1}][0]="${topic.id}";topicsList[${loopCount.count-1}][1]="${topic.title}";
+topicsList[${loopCount.count-1}][0]="${topic.id}";topicsList[${loopCount.count-1}][1]="${topicTitle}";
 </c:forEach> 
 
 </script>
