@@ -24,7 +24,7 @@ abbr{border-bottom-width: 0;}
 .comment-top-meta .timeago { display:block; font-size: 12px; color: #818181;line-height: 0px;margin-top:4px;}
 .comment-top-meta .replies { font-size: 11px; color: #105Cb6; } 
 .comment-content { display: block; line-height: 14px; margin-bottom: 10px; }
-.comment-content .the-comment-post { display: block; color: #333; font-size: 12px; margin-bottom: 3px; }
+.comment-content .the-comment-post {word-wrap: break-word; display: block; color: #333; font-size: 12px; margin-bottom: 3px; }
 
 .rank {float:right; font-size: 12px; color: #818181; border-bottom: dotted; border-bottom-width: thin;}
 .sentiment {border-bottom: dotted; border-bottom-width: thin; cursor: pointer;}
@@ -34,7 +34,7 @@ abbr{border-bottom-width: 0;}
 .bull {margin-right:8px;margin-left:8px;}
 #commsubform { display: block; padding-top: 12px; margin-bottom: 3px; clear: both; font-size: 11px; font-weight: bold;  color: #666; }
 #commsubformheader {display: block; font-size: 11px; font-weight: bold;  color: #666;}
-.commtxtfield { width: 350px; height: 144px; padding: 4px 7px; font-family: Arial, Tahoma, sans-serif; font-size: 14px; line-height: 18px; color: #575a60; }
+.commtxtfield { width: 350px; padding: 4px 7px; font-family: Arial, Tahoma, sans-serif; font-size: 14px; line-height: 18px; color: #575a60; }
 
 #commsubform img {
 	width: 25px;
