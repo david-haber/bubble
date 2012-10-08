@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <script>
@@ -131,7 +132,7 @@ $(document).ready(function() {
 <br/>	
 <h2 id="notif-title"> Notifications </h2>
 <div id="notif-sidebar" class="exploded-rounded-corners">
-	<c:if test="${notifs.size()==0}">
+	<c:if test="${fn:length(notifs)==0}">
 		<h4> WELCOME, ${uname}!</h4>
 		<p>This is where you will get your notifications.</p>
 		<p>It's looking mighty bare right now. When you comment or vote on topics the following activity on that topic will be notified here. </p>
