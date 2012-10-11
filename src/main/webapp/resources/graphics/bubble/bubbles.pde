@@ -1,14 +1,19 @@
 import de.bezier.data.sql.*;
 
+
 // database
 PostgreSQL pgsql;
-String host = "db";
+/*String host = "localhost";
+String database = "mydb";
+String user = "postgres";
+String pass = "happyxmas";*/
+String host = "db.doc.ic.ac.uk";
 String database = "g1136221_u";
 String user = "g1136221_u";
 String pass = "J2ezbmSgff";
 
 // parameters
-int topic = 56;
+int topic = 79;
 
 String topicName = "";
 
@@ -20,10 +25,10 @@ Circle circleClicked;
 TextBox textBox;
 PFont font = createFont("Georgia", 24, true);
 
-int BASE_RADIUS = 60;
+int BASE_RADIUS = 15;
 
 public void setup() {
-  size(1500, 800);
+  size(900, 600);
   frameRate(500);
   // get parameters
   topic = Integer.parseInt(param("topic"));
@@ -133,7 +138,7 @@ void drawGreenRedBackground() {
 }
 
 private void drawText() {
-  textFont(font, 50);
+  textFont(font, 30);
   
   // get title
   pgsql.query("SELECT title FROM topic WHERE id = " + topic);
@@ -259,8 +264,8 @@ class Comment {
  *
  */
 
-double DEFAULT_X_SPEED = 3;
-double DEFAULT_Y_SPEED = 6;
+double DEFAULT_X_SPEED = 1;
+double DEFAULT_Y_SPEED = 2;
 
 class Circle {
   float x, y; // location
@@ -386,10 +391,11 @@ public class TextBox {
   }
 
   void drawText() {
-    textFont(this.font, 40);
+    textFont(this.font, 24);
     fill(255);
     textAlign(CENTER);
-    text(boxText, x, y, x+w, y+h);
+    text(boxText, x, y, w, h);
+    
   }
 
   void setText(String tempBoxText) {
