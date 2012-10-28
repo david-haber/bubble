@@ -80,7 +80,7 @@ public class JdbcCommentRepository implements CommentRepository {
 			comment.setId(l);
 			logger.debug("Inserted new comment into database from "
 					+newComment.getCommenter()+" about topidID "+newComment.getTopic());
-			subsRepo.createSubscription(generatedId.intValue(), 
+			subsRepo.createSubscription(newComment.getTopic(), 
 					comment.getCommenter().getUsername(), true);
 			return result;
 		} catch (CloneNotSupportedException e) {

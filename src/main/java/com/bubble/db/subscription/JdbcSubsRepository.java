@@ -21,7 +21,14 @@ public class JdbcSubsRepository implements SubsRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public void createSubscription(int topic, String user, boolean subscribed){
+	public void createSubscription(long topic, String user, boolean subscribed){
+		boolean isSubscribed = this.isSubscribed(user, topic);
+		if (isSubscribed && subscribed)
+			return;
+		
+		if (!isSubscribed && !subscribed)
+			return;
+		
 		System.out.println("top"+topic + " " + "user" + user + " " + "subscr" + subscribed);
 		jdbcTemplate.update("update subscriptions set subscribed=?, datecreated=now() " +
 				"where userid=? and topic=?;", 
@@ -35,7 +42,7 @@ public class JdbcSubsRepository implements SubsRepository {
 		logger.debug(user + "subscribed/unsubcribed to/from the topic with id " + topic);
 	}
 
-	public boolean isSubscribed(String user, int topic) {
+	public boolean isSubscribed(String user, long topic) {
 		Boolean subscribed;
 		try {
 			subscribed = jdbcTemplate.queryForObject("SELECT subscribed FROM subscriptions " +

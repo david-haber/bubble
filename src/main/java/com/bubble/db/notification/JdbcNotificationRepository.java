@@ -30,7 +30,8 @@ public class JdbcNotificationRepository implements NotificationRepository {
 				"comment, userconnection, topic, subscriptions " +
 					"where votes.commentid = comment.id and comment.topic = " +
 					"subscriptions.topic and subscriptions.userid = '" + user + 
-					"' and comment.topic = topic.id and votes.voter = " +
+					"' and subscriptions.subscribed = 't'" +
+					" and comment.topic = topic.id and votes.voter = " +
 					"userconnection.userid and votes.datecreated > subscriptions.datecreated union " +
 				"select comment.commenter, imageurl, comment.datecreated, comment.topic, " +
 				"comment.id, topic.title, comment.text, null from comment, userconnection, " +
