@@ -3,17 +3,13 @@ import de.bezier.data.sql.*;
 
 // database
 PostgreSQL pgsql;
-/*String host = "localhost";
-String database = "mydb";
-String user = "postgres";
-String pass = "happyxmas";*/
 String host = "db.doc.ic.ac.uk";
 String database = "g1136221_u";
 String user = "g1136221_u";
 String pass = "J2ezbmSgff";
 
 // parameters
-int topic = 79;
+int topic = 100;
 
 String topicName = "";
 
