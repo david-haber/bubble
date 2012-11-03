@@ -310,11 +310,4 @@ function pressSubscribe() {
 		</c:forEach>
 	</ul>
 </div>
-<div style='text-align:center'>
-<form:form modelAttribute="bubblegraphics" action="bubblegraphics" method="GET">
-	<input type="hidden" value="${currentTopic.id}" name="topic"/>
-	<input type="hidden" name="score" id="score"/>
-	<input class="button" type="submit" style="font-size:70%" value="To Bubble Graphics!" />
-</form:form>
-</div>
 </div>
